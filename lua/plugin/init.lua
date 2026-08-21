@@ -2,4 +2,5 @@
 -- PLUGIN INIT.LUA
 -- ==================================================================
 
+require("plugin.treesitter")
 require("plugin.mini")

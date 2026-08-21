@@ -9,6 +9,7 @@
     |-- plugins/
     |   |-- init.lua
     |   |-- mini.lua
+    |   |-- treesitter.lua
     |-- config/
         |-- autocmds.lua
         |-- keymaps.lua

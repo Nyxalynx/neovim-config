@@ -7,16 +7,16 @@ vim.opt.background = "dark"
 vim.cmd.colorscheme("melange")
 
 -- OPTIONS
-require("config/options")
+require("config.options")
 
 -- STATUSLINE
-require("config/statusline")
+require("config.statusline")
 
 -- KEYMAPS
-require("config/keymaps")
+require("config.keymaps")
 
 -- AUTOCMDS
-require("config/autocmds")
+require("config.autocmds")
 
 -- ==================================================================
 -- PLUGINS (vim.pack)
@@ -54,53 +54,8 @@ packadd("efmls-configs-nvim")
 -- PLUGINS CONFIGS
 -- ==================================================================
 
-local setup_treesitter = function()
-	local treesitter = require("nvim-treesitter")
-	treesitter.setup({})
-	local ensure_installed = {
-		"vim",
-		"vimdoc",
-		"lua",
-		"query",
-		"json",
-		"markdown",
-		"html",
-		"css",
-		"c",
-		"cpp",
-		"bash",
-		"make",
-		"cmake",
-		"python",
-	}
-
-	local config = require("nvim-treesitter.config")
-
-	local already_installed = config.get_installed()
-	local parsers_to_install = {}
-
-	for _, parser in ipairs(ensure_installed) do
-		if not vim.tbl_contains(already_installed, parser) then
-			table.insert(parsers_to_install, parser)
-		end
-	end
-
-	if #parsers_to_install > 0 then
-		treesitter.install(parsers_to_install)
-	end
-
-	local group = vim.api.nvim_create_augroup("TreeSitterConfig", { clear = true })
-	vim.api.nvim_create_autocmd("FileType", {
-		group = group,
-		callback = function(args)
-			if vim.list_contains(config.get_installed(), vim.treesitter.language.get_lang(args.match)) then
-				vim.treesitter.start(args.buf)
-			end
-		end,
-	})
-end
-
-setup_treesitter()
+-- PLUGIN INIT.LUA
+require("plugin.init")
 
 require("nvim-tree").setup({
 	view = {
@@ -140,9 +95,6 @@ end, { desc = "FZF Diagnostics Document" })
 vim.keymap.set("n", "<leader>fX", function()
 	require("fzf-lua").diagnostics_workspace()
 end, { desc = "FZF Diagnostics Workspace" })
-
--- PLUGIN INIT.LUA
-require("plugin/init")
 
 require("gitsigns").setup({
 	signs = {
