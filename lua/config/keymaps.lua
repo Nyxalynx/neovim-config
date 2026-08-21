@@ -13,40 +13,45 @@ vim.keymap.set("n", "k", function()
 	return vim.v.count == 0 and "gk" or "k"
 end, { expr = true, silent = true, desc = "Up (wrap-aware)" })
 
-vim.keymap.set("n", "<leader>c", ":nohlsearch<CR>", { desc = "Clear search highlights" })
+local function keymap_set(mode, combination, action, description)
+	vim.keymap.set(mode, combination, action, { desc = description })
+end
 
-vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
+keymap_set("n", "<leader>c", ":nohlsearch<CR>", "Clear search highlights")
 
-vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
-vim.keymap.set({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without yanking" })
+keymap_set("n", "n", "nzzzv", "Next search result (centered)")
+keymap_set("n", "N", "Nzzzv", "Previous search result (centered)")
+keymap_set("n", "<C-d>", "<C-d>zz", "Half page down (centered)")
+keymap_set("n", "<C-u>", "<C-u>zz", "Half page up (centered)")
 
-vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
+keymap_set("x", "<leader>p", '"_dP', "Paste without yanking")
+keymap_set({ "n", "v" }, "<leader>x", '"_d', "Delete without yanking")
 
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
+keymap_set("n", "<leader>bn", ":bnext<CR>", "Next buffer")
+keymap_set("n", "<leader>bp", ":bprevious<CR>", "Previous buffer")
 
-vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split window vertically" })
-vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split window horizontally" })
-vim.keymap.set("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
-vim.keymap.set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
-vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
+keymap_set("n", "<C-h>", "<C-w>h", "Move to left window")
+keymap_set("n", "<C-j>", "<C-w>j", "Move to bottom window")
+keymap_set("n", "<C-k>", "<C-w>k", "Move to top window")
+keymap_set("n", "<C-l>", "<C-w>l", "Move to right window")
 
-vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
-vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
-vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
-vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+keymap_set("n", "<leader>sv", ":vsplit<CR>", "Split window vertically")
+keymap_set("n", "<leader>sh", ":split<CR>", "Split window horizontally")
 
-vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
-vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
+keymap_set("n", "<C-Up>", ":resize +2<CR>", "Increase window height")
+keymap_set("n", "<C-Down>", ":resize -2<CR>", "Decrease window height")
+keymap_set("n", "<C-Left>", ":vertical resize -2<CR>", "Decrease window width")
+keymap_set("n", "<C-Right>", ":vertical resize +2<CR>", "Increase window width")
 
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and keep cursor position" })
+keymap_set("n", "<A-j>", ":m .+1<CR>==", "Move line down")
+keymap_set("n", "<A-k>", ":m .-2<CR>==", "Move line up")
+keymap_set("v", "<A-j>", ":m '>+1<CR>gv=gv", "Move selection down")
+keymap_set("v", "<A-k>", ":m '<-2<CR>gv=gv", "Move selection up")
+
+keymap_set("v", "<", "<gv", "Indent left and reselect")
+keymap_set("v", ">", ">gv", "Indent right and reselect")
+
+keymap_set("n", "J", "mzJ`z", "Join lines and keep cursor position")
 
 vim.keymap.set("n", "<leader>pa", function() -- show file path
 	local path = vim.fn.expand("%:p")
